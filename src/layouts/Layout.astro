@@ -1,0 +1,87 @@
+---
+interface Props {
+	title: string;
+}
+const { title } = Astro.props;
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title}</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />    
+	</head>
+	<body>
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="/totoro_background.mp4" type="video/mp4">
+        </video>
+        <div class="crt-overlay"></div>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+        --bg-main: #0c1014;
+        --bg-overlay: rgba(12, 16, 20, 0.65);
+        --text-main: #99d1ce;
+        --selection-bg: #0a3749;
+        
+        --black: #0c1014;
+        --red: #c23127;
+        --green: #2aa889;
+        --yellow: #edb443;
+        --blue: #195466;
+        --magenta: #4e5166;
+        --cyan: #33859e;
+        --white: #99d1ce;
+    }
+
+    body {
+        font-family: 'JetBrains Mono', monospace;
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        background: var(--bg-main);
+        color: var(--text-main);
+        text-shadow: 0 0 2px rgba(0,0,0,0.5);
+    }
+
+    #bg-video {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.4;
+    }
+
+    .crt-overlay {
+        position: fixed;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+        z-index: 100;
+        background-size: 100% 4px;
+        pointer-events: none;
+        opacity: 0.15;
+    }
+
+    ::selection {
+        background: var(--selection-bg);
+        color: var(--text-main);
+    }
+
+    /* Global Typography Utilities */
+    .cmd-out { color: var(--text-main); }
+    .cmd-prompt { color: var(--green); font-weight: bold; }
+    .cmd-header { color: var(--cyan); font-weight: bold; }
+    .cmd-keyword { color: var(--blue); font-weight: bold; }
+    .cmd-accent { color: var(--yellow); }
+    .cmd-green { color: var(--green); }
+    .cmd-error { color: var(--red); }
+</style>
